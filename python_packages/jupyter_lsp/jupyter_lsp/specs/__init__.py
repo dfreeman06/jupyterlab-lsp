@@ -11,6 +11,7 @@ from .pyls import PythonLanguageServer
 from .r_languageserver import RLanguageServer
 from .sql_language_server import SQLLanguageServer
 from .texlab import Texlab
+from .ttl_language_server import TTLLanguageServer
 from .unified_language_server import UnifiedLanguageServer
 from .vscode_css_languageserver import VSCodeCSSLanguageServer
 from .vscode_html_languageserver import VSCodeHTMLLanguageServer
@@ -29,5 +30,6 @@ py = PythonLanguageServer()
 r = RLanguageServer()
 tex = Texlab()
 ts = JavascriptTypescriptLanguageServer()
+ttl = TTLLanguageServer()
 sql = SQLLanguageServer()
 yaml = YAMLLanguageServer()
