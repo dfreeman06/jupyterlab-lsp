@@ -26,6 +26,9 @@ KNOWN_SERVERS = [
     "vscode-html-languageserver-bin",
     "vscode-json-languageserver-bin",
     "yaml-language-server",
+    "turtle-language-server",
+    "sparql-language-server",
+    "stardog-graphql-language-server",
 ]
 
 CMD_BASED_SERVERS = {

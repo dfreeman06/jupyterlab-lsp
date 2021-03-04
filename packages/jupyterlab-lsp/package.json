@@ -61,6 +61,8 @@
     "@krassowski/completion-theme": "~2.0.0",
     "@krassowski/theme-material": "~2.0.0",
     "@krassowski/theme-vscode": "~2.0.0",
+    "codemirror-graphql": "^1.0.0",
+    "graphql": "^15.5.0",
     "lodash.mergewith": "^4.6.1",
     "lsp-ws-connection": "~0.5.1"
   },

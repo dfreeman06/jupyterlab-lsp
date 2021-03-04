@@ -17,6 +17,9 @@ Docker
     Wait Until Keyword Succeeds    3x    100ms    Editor Shows Features for Language    Docker    Dockerfile    Diagnostics=Instruction has no arguments
     ...    Jump to Definition=${def}    Rename=${def}
 
+GraphQL
+    Editor Shows Features for Language    GraphQl    example.graphql    Diagnostics=Expected
+
 JS
     ${def} =    Set Variable    xpath:(//span[contains(@class, 'cm-variable')][contains(text(), 'fib')])[last()]
     Editor Shows Features for Language    JS    example.js    Diagnostics=Expression expected    Jump to Definition=${def}    Rename=${def}
@@ -59,9 +62,15 @@ TSX
     ${def} =    Set Variable    xpath:(//span[contains(@class, 'cm-tag')][contains(text(), 'HelloWorld')])[last()]
     Editor Shows Features for Language    TSX    example.tsx    Diagnostics=Cannot find module 'react'    Jump to Definition=${def}    Rename=${def}
 
+Turtle
+    Editor Shows Features for Language    Turtle    example.ttl    Diagnostics=Expected
+
 TypeScript
     ${def} =    Set Variable    xpath:(//span[contains(@class, 'cm-variable')][contains(text(), 'inc')])[last()]
     Editor Shows Features for Language    TypeScript    example.ts    Diagnostics=The left-hand side of an arithmetic    Jump to Definition=${def}    Rename=${def}
+
+SPARQL
+    Editor Shows Features for Language    SPARQL    example.rq    Diagnostics=Expected
 
 SQL
     Editor Shows Features for Language    SQL    example.sql    Diagnostics=Expected
