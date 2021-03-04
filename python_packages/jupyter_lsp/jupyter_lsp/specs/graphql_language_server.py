@@ -1,25 +1,26 @@
-from .config import load_config_schema
 from .utils import NodeModuleSpec
 
+REPO = (
+    "https://github.com/stardog-union/stardog-language-servers/tree/master/packages/{}"
+)
 
-class TTLLanguageServer(NodeModuleSpec):
-    """Supports rdf turtle serialization"""
 
-    node_module = key = "turtle-language-server"
+class GRAPHQLLanguageServer(NodeModuleSpec):
+    """Supports GRAPHQL language"""
+
+    node_module = key = "stardog-graphql-language-server"
     script = ["dist", "cli.js"]
     languages = [
-        "ttl",
+        "graphql",
     ]
     args = ["--stdio"]
     spec = dict(
-        display_name=key,
+        display_name="graphql-language-server",
         mime_types=[
-            "application/ttl",
-            "text/ttl",
-            "text/x-ttl",
+            "application/graphql",
         ],
         urls=dict(
-            home="https://github.com/stardog-union/stardog-language-servers/tree/master/packages/{}".format(key),
+            home=REPO.format(key),
             issues="https://github.com/stardog-union/stardog-language-servers/issues",
         ),
         install=dict(
@@ -27,5 +28,4 @@ class TTLLanguageServer(NodeModuleSpec):
             yarn="yarn add --dev {}".format(key),
             jlpm="jlpm add --dev {}".format(key),
         ),
-        # config_schema=load_config_schema(key),
     )

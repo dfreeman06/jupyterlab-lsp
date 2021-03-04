@@ -19,7 +19,6 @@
     "npm-run-all": "^4.1.5",
     "precise-commits": "^1.0.2",
     "prettier": "^2.1.2",
-    "shacl-language-server": "^1.0.0",
     "sparql-language-server": "^4.0.0",
     "sql-language-server": "^0.11.4",
     "stardog-graphql-language-server": "^2.0.0",

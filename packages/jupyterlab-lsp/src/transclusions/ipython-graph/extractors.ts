@@ -12,15 +12,8 @@ export let foreign_code_extractors: IForeignCodeExtractorsRegistry = {
       file_extension: 'rq'
     }),
     new RegExpForeignCodeExtractor({
-      language: 'ttl',
+      language: 'turtle',
       pattern: '^%%(ttl)( .*?)?\n([^]*)',
-      extract_to_foreign: '$3',
-      is_standalone: false,
-      file_extension: 'ttl'
-    }),
-    new RegExpForeignCodeExtractor({
-      language: 'ttl',
-      pattern: '^%%(shacl)( .*?)?\n([^]*)',
       extract_to_foreign: '$3',
       is_standalone: false,
       file_extension: 'ttl'
