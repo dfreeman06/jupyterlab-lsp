@@ -3,11 +3,10 @@ import { expect } from 'chai';
 import { foreign_code_extractors } from './extractors';
 import {
   extract_code,
-  get_the_only_virtual,
-  wrap_in_python_lines
+  get_the_only_virtual
 } from '../../extractors/testutils';
 
-describe('IPython SQL extractors', () => {
+describe('IPython Graph extractors', () => {
   let document: VirtualDocument;
 
   function extract(code: string) {
@@ -30,86 +29,45 @@ describe('IPython SQL extractors', () => {
     document.clear();
   });
 
-  describe('%sql line magic', () => {
+  describe('%%sparql cell magic', () => {
     it('extracts simple commands', () => {
-      let code = wrap_in_python_lines('%sql select * from work');
+      let code = "%%sparql\nselect ?s where {?s ?p ?o}";
       let { cell_code_kept, foreign_document_map } = extract(code);
 
-      // should not be removed, but left for the static analysis (using magic overrides)
       expect(cell_code_kept).to.equal(code);
       let document = get_the_only_virtual(foreign_document_map);
-      expect(document.language).to.equal('sql');
-      expect(document.value).to.equal('select * from work\n');
-    });
-
-    it('leaves out the connection specification', () => {
-      let code = wrap_in_python_lines(
-        '%sql postgresql://will:longliveliz@localhost/shakes'
+      expect(document.language).to.equal('sparql');
+      expect(document.value).to.equal(
+        "select ?s where {?s ?p ?o}\n"
       );
-      let foreign_document_map = extract(code).foreign_document_map;
-      let document = get_the_only_virtual(foreign_document_map);
-      expect(document.language).to.equal('sql');
-      expect(document.value).to.equal('\n');
-    });
-
-    it('leaves out options', () => {
-      let code = wrap_in_python_lines('%sql -l');
-      let foreign_document_map = extract(code).foreign_document_map;
-      let document = get_the_only_virtual(foreign_document_map);
-      expect(document.language).to.equal('sql');
-      expect(document.value).to.equal('\n');
     });
   });
 
-  describe('%%sql cell magic', () => {
+  describe('%%ttl cell magic', () => {
     it('extracts simple commands', () => {
-      let code = "%%sql\nselect * from character\nwhere abbrev = 'ALICE'";
+      let code = "%%ttl\n<#me> rdf:type contact:Person .";
       let { cell_code_kept, foreign_document_map } = extract(code);
 
       expect(cell_code_kept).to.equal(code);
       let document = get_the_only_virtual(foreign_document_map);
-      expect(document.language).to.equal('sql');
+      expect(document.language).to.equal('turtle');
       expect(document.value).to.equal(
-        "select * from character\nwhere abbrev = 'ALICE'\n"
+        "<#me> rdf:type contact:Person .\n"
       );
     });
+  });
 
-    it('leaves out the connection specification', () => {
-      let code =
-        "%%sql postgresql://will:longliveliz@localhost/shakes\nselect * from character\nwhere abbrev = 'ALICE'";
-      let { foreign_document_map } = extract(code);
+  describe('%%graphql cell magic', () => {
+    it('extracts simple commands', () => {
+      let code = "%%graphql\n{jediHero: hero(episode: JEDI) {name}}";
+      let { cell_code_kept, foreign_document_map } = extract(code);
 
+      expect(cell_code_kept).to.equal(code);
       let document = get_the_only_virtual(foreign_document_map);
-      expect(document.language).to.equal('sql');
+      expect(document.language).to.equal('graphql');
       expect(document.value).to.equal(
-        "select * from character\nwhere abbrev = 'ALICE'\n"
+        "{jediHero: hero(episode: JEDI) {name}}\n"
       );
-    });
-
-    it('leaves out the variable assignment', () => {
-      let code = '%%sql works << SELECT title, year\nFROM work';
-      let { foreign_document_map } = extract(code);
-
-      let document = get_the_only_virtual(foreign_document_map);
-      expect(document.language).to.equal('sql');
-      expect(document.value).to.equal('SELECT title, year\nFROM work\n');
-    });
-
-    it('leaves out existing connection references', () => {
-      let code = '%%sql will@shakes\nSELECT title, year\nFROM work';
-      let { foreign_document_map } = extract(code);
-
-      let document = get_the_only_virtual(foreign_document_map);
-      expect(document.language).to.equal('sql');
-      expect(document.value).to.equal('SELECT title, year\nFROM work\n');
-    });
-
-    it('leaves out persist option', () => {
-      let code = '%%sql --persist dataframe\nSELECT * FROM dataframe;';
-      let { foreign_document_map } = extract(code);
-      let document = get_the_only_virtual(foreign_document_map);
-      expect(document.language).to.equal('sql');
-      expect(document.value).to.equal('SELECT * FROM dataframe;\n');
     });
   });
 });

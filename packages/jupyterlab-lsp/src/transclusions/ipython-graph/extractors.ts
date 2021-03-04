@@ -15,14 +15,14 @@ export let foreign_code_extractors: IForeignCodeExtractorsRegistry = {
       language: 'turtle',
       pattern: '^%%(ttl)( .*?)?\n([^]*)',
       extract_to_foreign: '$3',
-      is_standalone: false,
+      is_standalone: true,
       file_extension: 'ttl'
     }),
     new RegExpForeignCodeExtractor({
       language: 'graphql',
       pattern: '^%%(graphql)( .*?)?\n([^]*)',
       extract_to_foreign: '$3',
-      is_standalone: false,
+      is_standalone: true,
       file_extension: 'graphql'
     })
   ]
