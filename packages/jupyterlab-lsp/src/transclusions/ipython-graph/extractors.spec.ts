@@ -1,10 +1,7 @@
 import { VirtualDocument } from '../../virtual/document';
 import { expect } from 'chai';
 import { foreign_code_extractors } from './extractors';
-import {
-  extract_code,
-  get_the_only_virtual
-} from '../../extractors/testutils';
+import { extract_code, get_the_only_virtual } from '../../extractors/testutils';
 
 describe('IPython Graph extractors', () => {
   let document: VirtualDocument;
@@ -31,42 +28,38 @@ describe('IPython Graph extractors', () => {
 
   describe('%%sparql cell magic', () => {
     it('extracts simple commands', () => {
-      let code = "%%sparql\nselect ?s where {?s ?p ?o}";
+      let code = '%%sparql\nselect ?s where {?s ?p ?o}';
       let { cell_code_kept, foreign_document_map } = extract(code);
 
       expect(cell_code_kept).to.equal(code);
       let document = get_the_only_virtual(foreign_document_map);
       expect(document.language).to.equal('sparql');
-      expect(document.value).to.equal(
-        "select ?s where {?s ?p ?o}\n"
-      );
+      expect(document.value).to.equal('select ?s where {?s ?p ?o}\n');
     });
   });
 
   describe('%%ttl cell magic', () => {
     it('extracts simple commands', () => {
-      let code = "%%ttl\n<#me> rdf:type contact:Person .";
+      let code = '%%ttl\n<#me> rdf:type contact:Person .';
       let { cell_code_kept, foreign_document_map } = extract(code);
 
       expect(cell_code_kept).to.equal(code);
       let document = get_the_only_virtual(foreign_document_map);
       expect(document.language).to.equal('turtle');
-      expect(document.value).to.equal(
-        "<#me> rdf:type contact:Person .\n"
-      );
+      expect(document.value).to.equal('<#me> rdf:type contact:Person .\n');
     });
   });
 
   describe('%%graphql cell magic', () => {
     it('extracts simple commands', () => {
-      let code = "%%graphql\n{jediHero: hero(episode: JEDI) {name}}";
+      let code = '%%graphql\n{jediHero: hero(episode: JEDI) {name}}';
       let { cell_code_kept, foreign_document_map } = extract(code);
 
       expect(cell_code_kept).to.equal(code);
       let document = get_the_only_virtual(foreign_document_map);
       expect(document.language).to.equal('graphql');
       expect(document.value).to.equal(
-        "{jediHero: hero(episode: JEDI) {name}}\n"
+        '{jediHero: hero(episode: JEDI) {name}}\n'
       );
     });
   });
